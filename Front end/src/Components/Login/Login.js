@@ -4,6 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { withRouter, Redirect } from "react-router";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../Context/auth";
+import LoginString from '../../backend/LoginStrings';
 import axios from "axios";
 
 const Login = ({ history }) => {
@@ -24,6 +25,14 @@ const Login = ({ history }) => {
       setPassword(value);
       value ? setPasswordError("") : setPasswordError("Value is Required");
     }
+  };
+
+  const setLocalStorageForChat = (response) => {
+
+    localStorage.setItem(LoginString.Name , response.name);
+    localStorage.setItem(LoginString.ID , response.id);
+    localStorage.setItem(LoginString.PhotoURL , response.URL);
+    localStorage.setItem(LoginString.FirebaseDocumentId , response.id);
   };
 
   const onSubmitHandler = async (e) => {
@@ -50,12 +59,13 @@ const Login = ({ history }) => {
         `https://us-central1-clear-gantry-283402.cloudfunctions.net/app/getUserDetails/${userResponse.data.uid}/${password}`
       );
 
-      if (getUserResponse.data !== "") {
+      if (getUserResponse.data) {
         if (!getUserResponse.data) {
           setLoading(false);
           setError("Please enter correct password");
           return false;
         } else {
+          setLocalStorageForChat(getUserResponse.data);
           const userid = userResponse.data.uid;
           const response = await axios.get(
             `https://dhrzvmfzw6.execute-api.us-east-1.amazonaws.com/dev/question?uid=${userid}`
