@@ -9,6 +9,7 @@ import { AuthProvider } from "./Context/auth";
 import PrivateRoute from "./Routes/PrivateRoute";
 import SecondFactor from "./Components/Register/SecondFactor";
 import LoginSecondFactor from "./Components/Login/LoginSecondFactor";
+import Chat from './Components/Chat/Chat';
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/secondfactor" component={SecondFactor} />
+          <Route exact path="/chat" component={Chat} />
+          {/* <Route path="/chat" render={props => <Chat showToast={this.showToast}{...props}/>}/>  */}
           <Route
             exact
             path="/loginsecondfactor"

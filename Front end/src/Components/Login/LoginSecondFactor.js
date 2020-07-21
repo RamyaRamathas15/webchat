@@ -48,7 +48,7 @@ const LoginSecondFactor = ({ history, location }) => {
         .signInWithEmailAndPassword(email, password)
         .then((user) => {
           setLoading(false);
-          history.push("/home");
+          history.push("/chat");
         })
         .catch(function (error) {
           setLoading(false);
