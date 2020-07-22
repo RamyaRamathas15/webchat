@@ -30,9 +30,12 @@ const Login = ({ history }) => {
   const setLocalStorageForChat = (response) => {
 
     localStorage.setItem(LoginString.Name , response.name);
+    console.log("hi"+LoginString.Name)
     localStorage.setItem(LoginString.ID , response.id);
+    console.log("hi"+LoginString.id)
     localStorage.setItem(LoginString.PhotoURL , response.URL);
     localStorage.setItem(LoginString.FirebaseDocumentId , response.id);
+    console.log("hi"+LoginString.FirebaseDocumentId)
   };
 
   const onSubmitHandler = async (e) => {

@@ -40,6 +40,7 @@ export default class Chat extends Component{
         this.props.history.push('/profile');
     }
     componentDidMount(){
+        console.log("HI");
         firestore.collection('users').doc(this.currentUserId).get()
         .then((doc)=>{
             doc.data().messages.map((item)=>{
@@ -52,11 +53,17 @@ export default class Chat extends Component{
                 displayedContactSwitchedNotification: this.currentUserMessages
             })
         })
+        console.log("HI1");
         this.getListUser()
+        console.log("HI4");
+        console.log(this.currentUserName)
     }
     getListUser =async()=>{
-        const result = await firestore.collection('users').get();
-        if(result.docs.length>0){
+        console.log("HI5");
+        const result = await firestore.collection('users').get()
+        console.log("HI2");
+        console.log(result)
+        if(result >0){
             let listUsers = []
             listUsers = [...result.docs]
             listUsers.forEach((item, index)=>{
