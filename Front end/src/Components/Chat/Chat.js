@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import {firestore, auth} from '../../backend/firebase';
 import LoginString from '../../backend/LoginStrings';
 import './Chat.css';
-// import ReactLoading from 'react-loading';
 import ChatBox from '../ChatBox/ChatBox';
 import Welcome from '../Welcome/Welcome';
+import gallery from '../ChatBox/gallery.png';
 
 export default class Chat extends Component{
     constructor(props){
@@ -40,7 +40,6 @@ export default class Chat extends Component{
         this.props.history.push('/profile');
     }
     componentDidMount(){
-        console.log("HI");
         firestore.collection('users').doc(this.currentUserId).get()
         .then((doc)=>{
             doc.data().messages.map((item)=>{
@@ -53,17 +52,11 @@ export default class Chat extends Component{
                 displayedContactSwitchedNotification: this.currentUserMessages
             })
         })
-        console.log("HI1");
         this.getListUser()
-        console.log("HI4");
-        console.log(this.currentUserName)
     }
     getListUser =async()=>{
-        console.log("HI5");
         const result = await firestore.collection('users').get()
-        console.log("HI2");
-        console.log(result)
-        if(result >0){
+        if(result.docs.length>0){
             let listUsers = []
             listUsers = [...result.docs]
             listUsers.forEach((item, index)=>{
@@ -236,20 +229,20 @@ export default class Chat extends Component{
                             <div className="profileviewleftside">
                             <img className="ProfilePicture"
                             alt=""
-                            src={this.currentUserPhoto}
+                            src={gallery}
                             onClick={this.onProfileClick}/>
                              
                     <button onClick={this.logout}>Logout</button>
                     </div>
                     <div className="rootsearchbar">
                         <div className="input-container">
-                            <i class="fa fa-search icon">
+                           
                                 <input class="input-field"
                                     type="text"
                                     onChange={this.searchHandler}
                                     placeholder="search"
                                 />
-                            </i>
+                        
                         </div>
                     </div>
                     {this.state.displayedContacts}

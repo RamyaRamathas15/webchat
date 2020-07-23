@@ -4,12 +4,10 @@ import {Card} from 'react-bootstrap';
 // import ReactLoading from 'react-loading';
 import {firestore, auth,myStorage} from '../../backend/firebase';
 import LoginString from '../../backend/LoginStrings';
-// import moment from 'react-moment';
 
 import moment from 'moment';
 import gallery from './gallery.png';
 import send from './save.png';
-// import images from '../Themes/Images';
 
 export default class ChatBox extends Component{
     constructor(props){
@@ -90,7 +88,6 @@ export default class ChatBox extends Component{
         this.setState({isShowSticker: !this.state.isShowSticker})
     }
     onSendMessage=(content, type)=>{
-       //let notificationMessages=[]
         if(this.state.isShowSticker && type===2){
             this.setState({isShowSticker: false})
         }
@@ -117,26 +114,7 @@ export default class ChatBox extends Component{
         .then(()=>{
             this.setState({inputValue:''})
         })
-        // this.currentPeerUserMessages.map((item)=>{
-        //     if(item.notificationId != this.currentUserId){
-        //         notificationMessages.push(
-        //             {
-        //                 notificationId: item.notificationId,
-        //                 number: item.number
-        //             }
-        //         )
-        //     }
-        // })
-        // firebase.firestore()
-        // .collection('users')
-        // .doc(this.currentPeerUser.documentKey)
-        // .update({
-        //     messages: notificationMessages
-        // })
-        // .then((data)=>{})
-        // .catch(err =>{
-        //     this.props.showToast(0, err.toString())
-        // })
+  
     }
     scrollToBottom=()=>{
         if(this.messagesEnd){
@@ -197,7 +175,7 @@ export default class ChatBox extends Component{
     render(){
         return(
             <div>
-                <Card className="viewChatBoard">
+                <Card className="chatbox">
                     <div className="headerChatBoard">
                         <img 
                         className="viewAvatarItem"

@@ -1,0 +1,67 @@
+.group{
+    margin-left: 100px;
+}
+
+.im1{
+    
+    border-radius: 50%;
+    width: 150px;
+    float: left;
+}
+.form{
+    margin-top: 50px;
+}
+.group2{
+    padding-left: 190px;
+}
+
+.row{
+    padding-left: 100px;
+    padding-bottom: 20px;
+    justify-content: space-evenly;
+}
+
+.textarea{
+    height: 200px;
+    width: 400px;
+}
+
+.bg{
+    background-color: white;
+}
+
+.enquire{
+    float: left;
+}
+
+.btn1{
+    margin-bottom: 20px;
+}
+
+.drop{
+    width: 200px;
+}
+.fol{
+    float: left;
+}
+
+.enquire-btn{
+    background-color: #5969c7;
+    border-radius: 5px;
+}
+
+.heading{
+    margin-left: 600px;
+    padding-bottom: 30px;
+}
+
+.form-fields{
+    text-align: center;
+    
+}
+
+.Profile-pic{
+    padding:10px;
+    height: 100px;
+    border-radius: 50%;
+}
