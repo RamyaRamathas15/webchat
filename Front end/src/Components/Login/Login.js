@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../Context/auth";
 import LoginString from '../../backend/LoginStrings';
 import axios from "axios";
+import Navbar from '../Navbar/Navbar.js';
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -100,6 +101,7 @@ const Login = ({ history }) => {
 
   return (
     <>
+    <Navbar/>
       <Container>
         <br></br>
         <Row>
@@ -152,6 +154,7 @@ const Login = ({ history }) => {
           </Col>
         </Row>
       </Container>
+  
     </>
   );
 };

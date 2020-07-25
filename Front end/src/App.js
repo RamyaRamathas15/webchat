@@ -11,20 +11,21 @@ import SecondFactor from "./Components/Register/SecondFactor";
 import LoginSecondFactor from "./Components/Login/LoginSecondFactor";
 import Chat from './Components/Chat/Chat';
 import Profile from './Components/Profile/Profile';
+import Homepage from './Components/Homepage/Homepage';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Switch>
-          <PrivateRoute exact path="/" component={Home} />
+          <Route exact path="/" component={Homepage} />
           <PrivateRoute exact path="/home" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/secondfactor" component={SecondFactor} />
           <Route exact path="/chat" component={Chat} />
           <Route exact path="/profile" component={Profile}/>
-          {/* <Route path="/chat" render={props => <Chat showToast={this.showToast}{...props}/>}/>  */}
+          <Route exact path="/homepage" component={Homepage}/>
           <Route
             exact
             path="/loginsecondfactor"

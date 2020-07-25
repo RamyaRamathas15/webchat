@@ -5,6 +5,7 @@ import './Chat.css';
 import ChatBox from '../ChatBox/ChatBox';
 import Welcome from '../Welcome/Welcome';
 import gallery from '../ChatBox/gallery.png';
+import Navbar from '../Navbar/Navbar.js';
 
 export default class Chat extends Component{
     constructor(props){
@@ -19,7 +20,6 @@ export default class Chat extends Component{
         this.currentUserName = localStorage.getItem(LoginString.Name)
         this.currentUserId = localStorage.getItem(LoginString.ID);
         this.currentUserPhoto = localStorage.getItem(LoginString.PhotoURL);
-        this.currentUserDocumentId = localStorage.getItem(LoginString.FirebaseDocumentId);
 
         this.currentUserMessages = []
         this.searchUsers = []
@@ -68,7 +68,6 @@ export default class Chat extends Component{
                         name: item.data().name,
                         messages: item.data().messages,
                         URL: item.data().URL,
-                        description: item.data().description
                     }
                 )
             })
@@ -224,6 +223,7 @@ export default class Chat extends Component{
     render(){
         return(
                 <div  className="root">
+                    <Navbar/>
                     <div className ="body">
                         <div className="viewListUser">
                             <div className="profileviewleftside">

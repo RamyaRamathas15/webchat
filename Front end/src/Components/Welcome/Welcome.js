@@ -5,7 +5,7 @@ export default class Welcome extends Component{
     render(){
         return(
             <div>
-                <span>{`Welcome, ${this.props.currentUserName}`}</span>
+                <span>{`Welcome, ${this.props.currentUserName} `}</span>
                 <span>Let's Connect</span>
             </div>
         )

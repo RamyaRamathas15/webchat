@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import { Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import Navbar from '../Navbar/Navbar.js';
 
 const emailPattern = RegExp(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,})+$/);
 const passwordPattern = RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}/);
@@ -144,6 +145,7 @@ const Register = ({ history }) => {
 
   return (
     <>
+    <Navbar/>
       <Container>
         <br></br>
         <Row>
