@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, make_response, render_template
 import os
+from flask_cors import CORS
 from google.cloud import storage
 from wordcloud import WordCloud, STOPWORDS
 import io
@@ -8,6 +9,7 @@ import spacy
 
 
 app = Flask(__name__)
+CORS(app)
 nlp = spacy.load("en_core_web_sm")
 
 storage_client = storage.Client()

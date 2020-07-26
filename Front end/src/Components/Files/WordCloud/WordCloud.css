@@ -1,0 +1,12 @@
+
+.img-container {
+  width: 50%;
+  margin: 0 auto;
+}
+.img-container   img {
+    width: 100%;
+}
+
+.img-container button {
+  padding: .25rem .90rem
+}

@@ -1,5 +1,10 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.min.js";
+import "popper.js/dist/popper.min.js";
+import "jquery/dist/jquery.slim.min.js";
+import "jquery/dist/jquery.min.js";
+
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./Components/Login/Login";

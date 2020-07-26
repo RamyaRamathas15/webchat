@@ -2,23 +2,28 @@ import React, {Component} from "react";
 import axios from "axios";
 import "./FileUpload.css";
 import LoginString from '../../backend/LoginStrings';
+import WordCloud from './WordCloud/WordCloud';
 
 const FILE_UPLOAD_URL = "https://us-central1-serverlessproject-284221.cloudfunctions.net/uploadFiles";
 const SENTENCE_ENCODE_URL = "https://sentenceencoder-ednqegx5tq-uc.a.run.app/encode"
 const FILE_INFO_URL = "https://us-central1-clear-gantry-283402.cloudfunctions.net/app/files";
-const WORDCLOUD_URL = "https://wordcloud-ednqegx5tq-uc.a.run.app/home";
 
 export default class FileUpload extends Component {
   constructor(props) {
     super(props);
     this.state = {
       uploadedFiles: [],
-      selectedFile: null
+      selectedFile: null,
+      isLoading: false,
+      isFileUploading: false
     };
   }
 
   componentDidMount() {
     const organization = localStorage.getItem(LoginString.Organization);
+    this.setState({
+      isLoading: true
+    });
 
     axios.get(FILE_INFO_URL, {
       params: {
@@ -26,7 +31,8 @@ export default class FileUpload extends Component {
       }
     }).then(res => {
       this.setState({
-        uploadedFiles: res.data
+        uploadedFiles: res.data,
+        isLoading: false
       });
     });
   }
@@ -38,7 +44,9 @@ export default class FileUpload extends Component {
   onFileUpload = async () => {
     if (this.state.selectedFile != null) {
       try {
-        this.isLoading = true
+        this.setState({
+          isFileUploading: true
+        });
         const formData = new FormData();
         const KEY = "myFile";
 
@@ -69,7 +77,9 @@ export default class FileUpload extends Component {
       } catch(error) {
         alert(error);
       } finally {
-        this.isLoading = false
+        this.setState({
+          isFileUploading: false
+        });
       }
     } else {
       alert("Please upload a file");
@@ -104,46 +114,67 @@ export default class FileUpload extends Component {
       <div className="container pt-4">
         <h3 className="text-center mt-4">Cloud Storage</h3>
         <h4 className="text-center text-danger">By NuNu... 🚗🔥</h4>
-        <div className="row mt-4">
-          <div className="input-group col-sm-4 offset-sm-8">
-            <div className="custom-file">
-              <input
-                type="file"
-                className="custom-file-input"
-                onChange={this.onFileChange}
-              />
-              <label className="custom-file-label">Choose file</label>
+        <nav className="mt-4">
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-file-tab" data-toggle="tab" href="#nav-file" role="tab" aria-controls="nav-file" aria-selected="true">Files List</a>
+            <a class="nav-item nav-link" id="nav-word-cloud-tab" data-toggle="tab" href="#nav-word-cloud" role="tab" aria-controls="nav-word-cloud" aria-selected="false">Word Cloud</a>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active text-center" id="nav-file" role="tabpanel" aria-labelledby="nav-file-tab">
+            <div className="row mt-4">
+              <div className="input-group col-sm-4 offset-sm-8">
+                <div className="custom-file">
+                  <input
+                    type="file"
+                    className="custom-file-input"
+                    onChange={this.onFileChange}
+                  />
+                  <label className="custom-file-label">Choose file</label>
+                </div>
+                <div className="input-group-append">
+                  <button
+                    className="btn btn-primary"
+                    type="button"
+                    onClick={this.onFileUpload}
+                  >
+                    Upload
+                  </button>
+                </div>
+                <div></div>
+              </div>
             </div>
-            <div className="input-group-append">
-              <button
-                className="btn btn-primary"
-                type="button"
-                onClick={this.onFileUpload}
-              >
-                Upload
-              </button>
-            </div>
+
+            <table className="table  text-left">
+              <thead className="thead-dark">
+                <tr>
+                  <th>#</th>
+                  <th>File Name</th>
+                  <th>Created By</th>
+                </tr>
+              </thead>
+              <tbody style={this.state.isLoading ? {display: "none"} : {}}>
+                {this.state.uploadedFiles.map((item, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{item.file_name}</td>
+                    <td>{item.user}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div
+              class="spinner-border text-primary"
+              role="status"
+              style={!this.state.isLoading ? {display: "none"} : {}}
+            >
+            <span class="sr-only">Loading...</span>
+          </div>
+          </div>
+          <div class="tab-pane fade" id="nav-word-cloud" role="tabpanel" aria-labelledby="nav-word-cloud-tab">
+            <WordCloud></WordCloud>
           </div>
         </div>
-
-        <table className="table">
-          <thead className="thead-dark">
-            <tr>
-              <th>#</th>
-              <th>File Name</th>
-              <th>Created By</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.uploadedFiles.map((item, index) => (
-              <tr key={index}>
-                <td>{index}</td>
-                <td>{item.file_name}</td>
-                <td>{item.user}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     );
   }
