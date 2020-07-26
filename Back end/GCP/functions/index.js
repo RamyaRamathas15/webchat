@@ -10,6 +10,11 @@ app.use(cors({ origin: true }));
 
 const bcrypt = require("bcrypt");
 const saltRounds = 11;
+const fetch = require("node-fetch");
+const formidable = require('formidable-serverless');
+
+var FormData = require('form-data');
+var fs = require('fs');
 
 const db = admin.firestore();
 
@@ -111,4 +116,49 @@ app.delete("/deleteUserDetails/:id", async(req, res) => {
     }
 });
 
+app.post("/uploadFiles", (req, res, next) => {
+    try {
+        console.log("Running....")
+
+        const form = formidable({ multiples: true });
+
+        form.on('file', async(filename, file) => {
+            console.log({ name: 'file', key: filename, value: file.name, path: file.path });
+
+        });
+
+        form.parse(req, (err, fields, files) => {
+            if (err) {
+                console.log(err);
+                next(err);
+                return;
+            }
+            return res.json({ fields, files });
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 exports.app = functions.https.onRequest(app);
+
+exports.myFunction = functions.firestore
+    .document('Messages/{docId}/{collectionId}/{msgId}')
+    .onCreate(async(snap, context) => {
+        const newValue = snap.data();
+        console.log(context.params.collectionId);
+        console.log(context.params.msgId);
+        console.log(newValue);
+        const dataObj = {
+            fileName: context.params.collectionId + "-" + context.params.msgId,
+            data: newValue
+        }
+        await fetch("https://czuil77sqd.execute-api.us-east-1.amazonaws.com/default/uploadFilesS3", {
+            method: "POST",
+            body: JSON.stringify(dataObj),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        return "success";
+    });

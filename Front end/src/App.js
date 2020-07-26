@@ -11,6 +11,7 @@ import SecondFactor from "./Components/Register/SecondFactor";
 import LoginSecondFactor from "./Components/Login/LoginSecondFactor";
 import Chat from './Components/Chat/Chat';
 import Profile from './Components/Profile/Profile';
+import FileUpload from './Components/Files/FileUpload';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route exact path="/secondfactor" component={SecondFactor} />
           <Route exact path="/chat" component={Chat} />
           <Route exact path="/profile" component={Profile}/>
+          <Route exact path="/files" component={FileUpload}/>
           {/* <Route path="/chat" render={props => <Chat showToast={this.showToast}{...props}/>}/>  */}
           <Route
             exact
