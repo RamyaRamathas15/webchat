@@ -6,7 +6,9 @@ const express = require("express");
 const app = express();
 
 const cors = require("cors");
-app.use(cors({origin: true}));
+app.use(cors({
+  origin: true
+}));
 
 const bcrypt = require("bcrypt");
 const saltRounds = 11;
@@ -119,21 +121,22 @@ app.delete("/deleteUserDetails/:id", async (req, res) => {
 app.post("/files", async (req, res, next) => {
   try {
     console.log("Running....");
-    console.log(req.body["organization"]);
-    console.log(req.body.file_id);
-
     await db
       .collection("files")
       .doc(req.body.organization)
       .collection("meta")
       .doc(req.body.file_id)
       .create({
-        email: req.body.email,
-        file_name: req.body.file_name,
+        user: req.body.user,
+        file_name: req.body.filename,
         hash: req.body.hash
       });
 
-    return res.status(200).send(req.body.file_id);
+    return res.status(200).send({
+      file_id: req.body.file_id,
+      file_name: req.body.filename,
+      user: req.body.user
+    });
   } catch (error) {
     console.log(error);
     return res.status(400).send(error);
@@ -146,13 +149,12 @@ app.get("/files", async (req, res, next) => {
 
     const files = await db
       .collection("files")
-      .doc(req.body.organization)
+      .doc(req.query.organization || req.body.organization)
       .collection("meta")
       .get();
 
     let filesList = [];
     files.forEach((item, i) => {
-      console.log(item.data());
       filesList.push(item.data());
     });
 
@@ -161,6 +163,57 @@ app.get("/files", async (req, res, next) => {
     console.log(error);
     return res.status(200).send(error);
   }
+});
+
+
+app.get("/clusterfiles", async (req, res) => {
+
+  try {
+    const files = await db
+      .collection("files")
+      .doc(req.body.organization)
+      .collection("meta")
+      .get();
+
+    let filesNameList = [];
+    const hashList = [];
+    files.forEach((item, i) => {
+      const fileData = item.data();
+      filesNameList.push(fileData["file_name"]);
+      hashList.push(JSON.parse(fileData["hash"])[0]);
+    });
+
+    const reqData = {
+      instances: hashList
+    }
+
+    const response = await fetch("https://fileclustering-ednqegx5tq-uc.a.run.app/predict", {
+      method: "POST",
+      body: JSON.stringify(reqData),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    const responseObj = []
+    const predictionData = await response.json();
+    if (predictionData["response"] == "success") {
+      filesNameList.map((file, index) => {
+        const fileArray = {};
+        fileArray["name"] = file;
+        fileArray["group"] = predictionData["predictions"][index];
+        responseObj.push(fileArray);
+      });
+
+      res.status(200).send(responseObj);
+    } else {
+      res.status(400).send("Error fetching prediction");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+
 });
 
 exports.app = functions.https.onRequest(app);
@@ -177,8 +230,7 @@ exports.myFunction = functions.firestore
       data: newValue
     };
     await fetch(
-      "https://czuil77sqd.execute-api.us-east-1.amazonaws.com/default/uploadFilesS3",
-      {
+      "https://czuil77sqd.execute-api.us-east-1.amazonaws.com/default/uploadFilesS3", {
         method: "POST",
         body: JSON.stringify(dataObj),
         headers: {
