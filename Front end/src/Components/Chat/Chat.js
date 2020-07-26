@@ -229,7 +229,7 @@ export default class Chat extends Component{
                             <div className="profileviewleftside">
                             <img className="ProfilePicture"
                             alt=""
-                            src={gallery}
+                            src={this.currentUserPhoto}
                             onClick={this.onProfileClick}/>
                              
                     <button onClick={this.logout}>Logout</button>

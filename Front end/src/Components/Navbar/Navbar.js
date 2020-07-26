@@ -20,7 +20,7 @@ class NavbarComponent extends Component {
               <Nav.Link as={Link} to="/homepage">
                 Home
               </Nav.Link>
-              <Nav.Link as={Link} to="/chat">
+              <Nav.Link as={Link} to="/login">
                 Chat
               </Nav.Link>
               <Nav.Link as={Link} to="/">

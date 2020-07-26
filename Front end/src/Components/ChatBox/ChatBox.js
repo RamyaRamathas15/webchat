@@ -187,7 +187,7 @@ export default class ChatBox extends Component{
                  
                     </div>
                     <div className="viewListContentChat">
-                        {/* {this.renderListMessage()} */}
+                        {this.renderListMessage()}
                         <div style={{float: 'left', clear: 'both'}}
                         ref={l=> {
                             this.messagesEnd = l
@@ -245,33 +245,40 @@ export default class ChatBox extends Component{
         }
         return hash
     }
-    // renderListMessage = () => {
-    //     if (this.listMessage.length > 0) {
-    //         let viewListMessage = []
-    //         this.listMessage.forEach((item, index) => {
-    //             if (item.idFrom === this.currentUserId) {
-    //                 if (item.type === 0) {
-    //                     viewListMessage.push(
-    //                         <div className="viewItemRight" key={item.timestamp}>
-    //                             <span className="textContentItem">{item.content}</span>
-    //                         </div>
-    //                     )
-    //                 }
-    //             }
-    //         })
-    //         return viewListMessage
-    //     }
-    //     else {
-    //         return (
-    //             <div className="viewWrapSayHi">
-    //                 <span className="textSayHi">Say hi to new friend</span>
-    //                 <img
-    //                     className="imgWaveHand"
-    //                     src={images.ic_wave_hand}
-    //                     alt="wave hand"
-    //                 />
-    //             </div>
-    //         )
-    //     }
-    // }
+    renderListMessage = () => {
+        if (this.listMessage.length > 0) {
+            let viewListMessage = []
+            this.listMessage.forEach((item, index) => {
+                if (item.idFrom === this.currentUserId) {
+                    console.log(item.type)
+                    if (item.type === 0) {
+                        viewListMessage.push(
+                            <div className="viewItemRight" key={item.timestamp}>
+                                <span className="textContentItem">{item.content}</span>
+                            </div>
+                           
+                        )
+                    }else if(item.type ==1 ){
+                        viewListMessage.push(
+                        <div className="viewItemRight" key={item.timestamp}>
+                        <img className="imhg" 
+                        src={item.content}/>
+                        </div>
+                        )
+                    }
+                }
+                else 
+                    if (item.type === 0) {
+                        viewListMessage.push(
+                            <div className="viewWrapItemLeft" key={item.timestamp}>
+                                <span className="textContentItem">{item.content}</span>
+                            </div>
+                        )
+                    }
+                
+                
+            })
+            return viewListMessage
+        }
+    }
 }

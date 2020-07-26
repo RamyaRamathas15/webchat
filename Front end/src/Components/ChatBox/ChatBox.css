@@ -100,17 +100,15 @@ input::placeholder {
 .viewItemRight {
     width: 300px;
     height: auto;
-   
-    background-color: #dcf8c6;
+    background-color: #87bcc9;
     align-self: flex-end;
     margin-right: 20px;
     margin-top: 10px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 0px;
+    float: left;
+    clear: left;
+    display:inline;
     color: #203152;
-    text-align: left;
+    text-align: right;
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 10px;
@@ -122,7 +120,7 @@ input::placeholder {
     width: 300px;
     height: auto;
     background-color: #e1f3fb;
-    align-self: flex-end;
+    align-self: flex-start;
     margin-right: 20px;
     margin-top: 10px;
     border-top-left-radius: 8px;
@@ -150,11 +148,22 @@ input::placeholder {
 
 .viewWrapItemLeft {
     width: 300px;
-    text-align: left;
+    height: auto;
+    background-color: #87bcc9;
     align-self: flex-start;
-    margin-left: 20px;
+    float: left;
+    margin-right: 20px;
     margin-top: 10px;
-    margin-bottom: -15px;
+    margin-left: 20px;
+
+    color: #203152;
+    text-align: left;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: 0 5px 5px #808888;
+    
    
 }
 

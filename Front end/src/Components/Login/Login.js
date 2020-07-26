@@ -7,6 +7,7 @@ import { AuthContext } from "../../Context/auth";
 import LoginString from '../../backend/LoginStrings';
 import axios from "axios";
 import Navbar from '../Navbar/Navbar.js';
+import images from '../Login/golden1.jpeg';
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -34,7 +35,7 @@ const Login = ({ history }) => {
     console.log("hi"+LoginString.Name)
     localStorage.setItem(LoginString.ID , response.id);
     console.log("hi"+LoginString.id)
-    localStorage.setItem(LoginString.PhotoURL , response.URL);
+    localStorage.setItem(LoginString.PhotoURL , images );
     localStorage.setItem(LoginString.FirebaseDocumentId , response.id);
     console.log("hi"+LoginString.FirebaseDocumentId)
   };
