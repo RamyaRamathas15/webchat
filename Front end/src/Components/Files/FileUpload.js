@@ -5,7 +5,7 @@ import LoginString from '../../backend/LoginStrings';
 
 const FILE_UPLOAD_URL = "https://us-central1-serverlessproject-284221.cloudfunctions.net/uploadFiles";
 const SENTENCE_ENCODE_URL = "https://sentenceencoder-ednqegx5tq-uc.a.run.app/encode"
-const FILE_INFO_URL = "https://us-central1-serverlessproject-284221.cloudfunctions.net/files";
+const FILE_INFO_URL = "https://us-central1-clear-gantry-283402.cloudfunctions.net/app/files";
 const WORDCLOUD_URL = "https://wordcloud-ednqegx5tq-uc.a.run.app/home";
 
 export default class FileUpload extends Component {
@@ -18,11 +18,16 @@ export default class FileUpload extends Component {
   }
 
   componentDidMount() {
-    axios.get(FILE_INFO_URL).then(res => {
+    const organization = localStorage.getItem(LoginString.Organization);
+
+    axios.get(FILE_INFO_URL, {
+      params: {
+        organization
+      }
+    }).then(res => {
       this.setState({
         uploadedFiles: res.data
       });
-      console.log(this.state.uploadedFiles);
     });
   }
 
@@ -46,16 +51,20 @@ export default class FileUpload extends Component {
         const organization = localStorage.getItem(LoginString.Organization);
         axios.post(FILE_UPLOAD_URL + `?organizationId=${organization}`, formData).then(async (res) => {
           const hash = await this.encodeText(res.data.files.myFile.name);
+          let fileId = res.data.files.myFile.path.split("/");
+          fileId = fileId[fileId.length-1];
+          const user = localStorage.getItem(LoginString.Name);
+
           let fileInfo = {
             organization,
             hash,
-            email: localStorage.getItem(LoginString.Email),
+            user,
             filename: res.data.files.myFile.name,
-            path: res.data.files.myFile.path
+            file_id:fileId
           };
 
-          await axios.post(FILE_INFO_URL, fileInfo);
-          this.updateFilesList(res.data.files.myFile);
+          const updatedFile = await axios.post(FILE_INFO_URL, fileInfo);
+          this.updateFilesList(updatedFile.data);
         });
       } catch(error) {
         alert(error);
@@ -69,9 +78,11 @@ export default class FileUpload extends Component {
 
   updateFilesList = (file) => {
     let files = this.state.uploadedFiles;
+
+    console.log(file)
     files.push({
-      filename: file.name,
-      createdTime: file.mtime
+      file_name: file.file_name,
+      user: file.user
     });
 
     this.setState({
@@ -81,10 +92,10 @@ export default class FileUpload extends Component {
 
   encodeText = async (text) => {
     try {
-      const hash = await axios.get(SENTENCE_ENCODE_URL + `?fileName=${text}`);
-      return hash
+      const response = await axios.get(SENTENCE_ENCODE_URL + `?fileName=${text}`);
+      return response.data.value;
     } catch (error) {
-      console.log(error)
+      alert(error)
     }
   }
 
@@ -120,15 +131,15 @@ export default class FileUpload extends Component {
             <tr>
               <th>#</th>
               <th>File Name</th>
-              <th>Uploaded Time</th>
+              <th>Created By</th>
             </tr>
           </thead>
           <tbody>
             {this.state.uploadedFiles.map((item, index) => (
-              <tr>
+              <tr key={index}>
                 <td>{index}</td>
-                <td>{item.filename}</td>
-                <td>{item.createdTime}</td>
+                <td>{item.file_name}</td>
+                <td>{item.user}</td>
               </tr>
             ))}
           </tbody>

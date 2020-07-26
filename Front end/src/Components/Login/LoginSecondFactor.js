@@ -25,6 +25,7 @@ const LoginSecondFactor = ({ history, location }) => {
     localStorage.setItem(LoginString.Name, response.name);
     localStorage.setItem(LoginString.ID, response.id);
     localStorage.setItem(LoginString.PhotoURL, response.URL);
+    localStorage.setItem(LoginString.Organization, response.organization);
     // localStorage.setItem(LoginString.FirebaseDocumentId, response.id)
   };
 

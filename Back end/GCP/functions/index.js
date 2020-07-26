@@ -119,21 +119,22 @@ app.delete("/deleteUserDetails/:id", async (req, res) => {
 app.post("/files", async (req, res, next) => {
   try {
     console.log("Running....");
-    console.log(req.body["organization"]);
-    console.log(req.body.file_id);
-
     await db
       .collection("files")
       .doc(req.body.organization)
       .collection("meta")
       .doc(req.body.file_id)
       .create({
-        email: req.body.email,
-        file_name: req.body.file_name,
+        user: req.body.user,
+        file_name: req.body.filename,
         hash: req.body.hash
       });
 
-    return res.status(200).send(req.body.file_id);
+    return res.status(200).send({
+      file_id: req.body.file_id,
+      file_name: req.body.filename,
+      user: req.body.user
+    });
   } catch (error) {
     console.log(error);
     return res.status(400).send(error);
@@ -146,13 +147,12 @@ app.get("/files", async (req, res, next) => {
 
     const files = await db
       .collection("files")
-      .doc(req.body.organization)
+      .doc(req.query.organization || req.body.organization)
       .collection("meta")
       .get();
 
     let filesList = [];
     files.forEach((item, i) => {
-      console.log(item.data());
       filesList.push(item.data());
     });
 
