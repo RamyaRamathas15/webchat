@@ -85,7 +85,6 @@ app.post("/postUserDetails", async(req, res) => {
                 password: encryptedPassword,
                 name: req.body.name,
                 organization: req.body.organization,
-                online: true
             });
         return res.status(200).send(req.body.id);
     } catch (error) {
