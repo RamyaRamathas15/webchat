@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
+import React, { useState, useContext } from "react";
+import { Form, Button, Navbar } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
 import { auth } from "../../backend/firebase";
 import axios from "axios";
+import { AuthContext } from "../../Context/auth";
 
 const LoginSecondFactor = ({ history, location }) => {
   const [answer, setAnswer] = useState("");
   const [answerError, setAnswerError] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { setCurrentUser } = useContext(AuthContext);
 
   const email = location?.state?.email || null;
   const password = location?.state?.password || null;
@@ -48,6 +50,7 @@ const LoginSecondFactor = ({ history, location }) => {
         .signInWithEmailAndPassword(email, password)
         .then((user) => {
           setLoading(false);
+          setCurrentUser(user);
           history.push("/chat");
         })
         .catch(function (error) {
@@ -64,6 +67,7 @@ const LoginSecondFactor = ({ history, location }) => {
 
   return (
     <>
+      <Navbar />
       <Container>
         <br></br>
         <Row>

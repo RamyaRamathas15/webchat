@@ -1,53 +1,64 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { Form } from "react-bootstrap";
+import { AuthContext } from "../../Context/auth";
+import { auth } from "../../backend/firebase";
+import { withRouter } from "react-router";
 
-class NavbarComponent extends Component {
-  render() {
-    return (
-      <div>
-        <Navbar className="navbar_bg" expand="lg">
-          <Navbar.Brand as={Link} to="/home">
-            LMS
-          </Navbar.Brand>
+const NavbarComponent = (props) => {
+  const { currentUser } = useContext(AuthContext);
 
-          <Navbar.Collapse>
-            <Nav className="mr-auto">
-              <Nav.Link as={Link} to="/homepage">
-                Home
-              </Nav.Link>
-              <Nav.Link as={Link} to="/login">
-                Chat
-              </Nav.Link>
-              <Nav.Link as={Link} to="/">
-                Online support
-              </Nav.Link>
+  const logout = () => {
+    auth.signOut();
+    props.history.push("/");
+    localStorage.clear();
+  };
 
-              <Nav.Link as={Link} to="/">
-                Contact Us
-              </Nav.Link>
-            </Nav>
-            <Form>
-              <NavDropdown title="Profile">
-                <NavDropdown.Item as={Link} to="/login">
-                  Login
-                </NavDropdown.Item>
+  return (
+    <div>
+      <Navbar className="navbar_bg" expand="lg">
+        <Navbar.Brand href="/">LMS</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            {currentUser ? (
+              <>
+                <Nav.Link href="/chat">Chat</Nav.Link>
+                <Nav.Link href="/">Online support</Nav.Link>
+              </>
+            ) : (
+              <></>
+            )}
+          </Nav>
 
-                <NavDropdown.Divider />
-                <NavDropdown.Item as={Link} to="/register">
-                  Register
-                </NavDropdown.Item>
-              </NavDropdown>
-            </Form>
-          </Navbar.Collapse>
-        </Navbar>
-      </div>
-    );
-  }
-}
+          <Form>
+            <NavDropdown title="Profile">
+              {currentUser ? (
+                <>
+                  <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+                </>
+              ) : (
+                <>
+                  <NavDropdown.Item as={Link} to="/login">
+                    Login
+                  </NavDropdown.Item>
 
-export default NavbarComponent;
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item as={Link} to="/register">
+                    Register
+                  </NavDropdown.Item>
+                </>
+              )}
+            </NavDropdown>
+          </Form>
+        </Navbar.Collapse>
+      </Navbar>
+    </div>
+  );
+};
+
+export default withRouter(NavbarComponent);

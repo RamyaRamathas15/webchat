@@ -4,10 +4,10 @@ import { Container, Row, Col } from "react-bootstrap";
 import { withRouter, Redirect } from "react-router";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../Context/auth";
-import LoginString from '../../backend/LoginStrings';
+import LoginString from "../../backend/LoginStrings";
 import axios from "axios";
-import Navbar from '../Navbar/Navbar.js';
-import images from '../Login/golden1.jpeg';
+import Navbar from "../Navbar/Navbar.js";
+import images from "../Login/golden1.jpeg";
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -30,14 +30,13 @@ const Login = ({ history }) => {
   };
 
   const setLocalStorageForChat = (response) => {
-
-    localStorage.setItem(LoginString.Name , response.name);
-    console.log("hi"+LoginString.Name)
-    localStorage.setItem(LoginString.ID , response.id);
-    console.log("hi"+LoginString.id)
-    localStorage.setItem(LoginString.PhotoURL , images );
-    localStorage.setItem(LoginString.FirebaseDocumentId , response.id);
-    console.log("hi"+LoginString.FirebaseDocumentId)
+    localStorage.setItem(LoginString.Name, response.name);
+    console.log("hi" + LoginString.Name);
+    localStorage.setItem(LoginString.ID, response.id);
+    console.log("hi" + LoginString.id);
+    localStorage.setItem(LoginString.PhotoURL, images);
+    localStorage.setItem(LoginString.FirebaseDocumentId, response.id);
+    console.log("hi" + LoginString.FirebaseDocumentId);
   };
 
   const onSubmitHandler = async (e) => {
@@ -102,7 +101,7 @@ const Login = ({ history }) => {
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <Container>
         <br></br>
         <Row>
@@ -155,7 +154,6 @@ const Login = ({ history }) => {
           </Col>
         </Row>
       </Container>
-  
     </>
   );
 };
