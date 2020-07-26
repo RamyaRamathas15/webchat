@@ -8,7 +8,7 @@ const LoginString = {
     Description: 'mydesc',
     UPLOAD_CHANGED: 'state_changed',
     PREFIX_IMAGE: 'image/',
-    CurrentUserdocKey: ''
+    CurrentUserdocKey: '',
 }
 
 export default LoginString

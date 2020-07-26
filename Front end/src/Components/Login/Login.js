@@ -4,10 +4,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import { withRouter, Redirect } from "react-router";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../Context/auth";
-import LoginString from "../../backend/LoginStrings";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar.js";
-import images from "../Login/golden1.jpeg";
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -27,16 +25,6 @@ const Login = ({ history }) => {
       setPassword(value);
       value ? setPasswordError("") : setPasswordError("Value is Required");
     }
-  };
-
-  const setLocalStorageForChat = (response) => {
-    localStorage.setItem(LoginString.Name, response.name);
-    console.log("hi" + LoginString.Name);
-    localStorage.setItem(LoginString.ID, response.id);
-    console.log("hi" + LoginString.id);
-    localStorage.setItem(LoginString.PhotoURL, response.URL);
-    localStorage.setItem(LoginString.FirebaseDocumentId, response.id);
-    console.log("hi" + LoginString.FirebaseDocumentId);
   };
 
   const onSubmitHandler = async (e) => {
@@ -69,7 +57,6 @@ const Login = ({ history }) => {
           setError("Please enter correct password");
           return false;
         } else {
-          setLocalStorageForChat(getUserResponse.data);
           const userid = userResponse.data.uid;
           const response = await axios.get(
             `https://dhrzvmfzw6.execute-api.us-east-1.amazonaws.com/dev/question?uid=${userid}`
@@ -82,6 +69,7 @@ const Login = ({ history }) => {
               email,
               password,
               question: response.data.body,
+              response: getUserResponse.data,
             },
           });
         }

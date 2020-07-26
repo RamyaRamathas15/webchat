@@ -4,6 +4,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import { auth } from "../../backend/firebase";
 import axios from "axios";
 import { AuthContext } from "../../Context/auth";
+import LoginString from "../../backend/LoginStrings";
+import images from "../Login/golden1.jpeg";
 
 const LoginSecondFactor = ({ history, location }) => {
   const [answer, setAnswer] = useState("");
@@ -16,6 +18,14 @@ const LoginSecondFactor = ({ history, location }) => {
   const password = location?.state?.password || null;
   const uid = location?.state?.uid || null;
   const question = location?.state?.question || null;
+  const responseData = location?.state?.response || null;
+
+  const setLocalStorageForChat = (response) => {
+    localStorage.setItem(LoginString.Name, response.name);
+    localStorage.setItem(LoginString.ID, response.id);
+    localStorage.setItem(LoginString.PhotoURL, images);
+    // localStorage.setItem(LoginString.FirebaseDocumentId, response.id)
+  };
 
   const onChangeHandler = (e) => {
     setError("");
@@ -50,6 +60,7 @@ const LoginSecondFactor = ({ history, location }) => {
         .signInWithEmailAndPassword(email, password)
         .then((user) => {
           setLoading(false);
+          setLocalStorageForChat(responseData);
           setCurrentUser(user);
           history.push("/chat");
         })
