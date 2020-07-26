@@ -3,8 +3,9 @@ import './Profile.css';
 import TextField from '@material-ui/core/TextField';
 import { Form, Container, Button, Row, Col } from 'react-bootstrap';
 import gallery from '../ChatBox/gallery.png';
-import firebase from '../../backend/firebase';
+import {firestore, auth} from '../../backend/firebase';
 import LoginString from '../../backend/LoginStrings';
+import Navbar from '../Navbar/Navbar.js';
 
 export default class Profile extends Component{
     // onSubmit = () => {
@@ -14,23 +15,25 @@ export default class Profile extends Component{
     constructor(props){
         super(props)
         this.state={
-            studentName:""
+            name:"",
+            aboutme: ""
         }
         this.currentUserId = localStorage.getItem(LoginString.ID);
         this.onChange = this.onChange.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
     }
-    onChange(){
-        var nameValue = this.refs.name.value
-        this.setState({studentName: nameValue}) 
+    onChange(e, label){
+        const nextState = {};
+        nextState[label] = e.target.value;
+        this.setState(nextState);
     }
     onSubmit () {
-        
-        firebase.database().ref('users/'+this.state.currentUserId).set({
-          name: this.state.studentName
+        console.log(this.state.name)
+        firestore.collection("users").doc(auth.getUid()).update({
+            "name": this.state.name,
+            "description": this.state.aboutme
         })
-        console.log("updated")
-        console.log(this.studentName)
+
         this.setState({
           isSubmitted: true
          
@@ -40,10 +43,10 @@ export default class Profile extends Component{
     render(){
         return(
             <div>
+                <Navbar/>
                 <h2 className="heading">Profile</h2>
                  <form className="form" onSubmit={this.onSubmit} >
                         <div className="form-fields">
-                   <img className="Profile-pic" src={gallery}/>
                    
                                    <br/>
                                 
@@ -51,13 +54,12 @@ export default class Profile extends Component{
                                         className="text-field"
                                         required
                                         label="Name"
-                                        ref="name"
                                         onBlur={this.isSubmitDisabled} 
-                                        onChange={this.handleChange}
+                                        onChange={e => this.onChange(e, 'name')}
                                         variant="outlined"
                                     />
 
-                             <br/>
+                             <br/> <br/>
                             
                              
                                     <TextField
@@ -65,7 +67,7 @@ export default class Profile extends Component{
                                         label="About me"
                                         multiline
                                         rows={5}
-                                        onChange={this.handleChange}
+                                        onChange={e => this.onChange(e,'aboutme' )}
                                         variant="outlined"
                                     />
                             

@@ -4,7 +4,7 @@ import {Card} from 'react-bootstrap';
 // import ReactLoading from 'react-loading';
 import {firestore, auth,myStorage} from '../../backend/firebase';
 import LoginString from '../../backend/LoginStrings';
-
+import Navbar from '../Navbar/Navbar.js';
 import moment from 'moment';
 import gallery from './gallery.png';
 import send from './save.png';
@@ -20,8 +20,6 @@ export default class ChatBox extends Component{
         this.currentUserName = localStorage.getItem(LoginString.Name)
         this.currentUserId = localStorage.getItem(LoginString.ID);
         this.currentUserPhoto = localStorage.getItem(LoginString.PhotoURL);
-        this.currentUserDocumentId = localStorage.getItem(LoginString.FirebaseDocumentId);
-        this.stateChanged = localStorage.getItem(LoginString.UPLOAD_CHANGED);
         this.currentPeerUser = this.props.currentPeerUser
         this.groupChatId = null;
         this.listMessage =[];
@@ -175,6 +173,7 @@ export default class ChatBox extends Component{
     render(){
         return(
             <div>
+                
                 <Card className="chatbox">
                     <div className="headerChatBoard">
                         <img 
@@ -185,11 +184,7 @@ export default class ChatBox extends Component{
                         <span className="textHeaderChatBoard">
                             <p style={{fontSize:'20px'}}>{this.currentPeerUser.name}</p>
                         </span>
-                        <div>
-                        <span className="textHeaderChatBoard">
-                            <p style={{fontSize:'20px'}}>{this.currentPeerUser.description}</p>
-                        </span>
-                        </div>
+                 
                     </div>
                     <div className="viewListContentChat">
                         {/* {this.renderListMessage()} */}

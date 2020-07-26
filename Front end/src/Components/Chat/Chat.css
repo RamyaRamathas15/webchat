@@ -34,7 +34,6 @@
 /* List user */
 
 .viewListUser {
-    overflow-y: scroll;
     max-height: 100vh;
     min-height: 90vh;
     height: auto;
@@ -111,7 +110,7 @@
     padding:10px;
     width: 100%; 
         margin-bottom: 10px; 
-    background-color: #f7f7f7;
+    background-color: #ccaeae;
     }
 
  
@@ -119,7 +118,7 @@
     .profileviewleftside{
     padding:10px;
     width: 100%; 
-    background-color:  #ededed;
+    background-color:  #d8d0d0;
     height: 64px;
     position: relative;
     margin-top: 0;

@@ -4,14 +4,14 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    width: 100%;
+    width: 1100px;
     position: relative;
     
     backface-visibility: hidden;
     border-left: 1px solid #ededed;
 
-    max-height: 100vh;
-    min-height: 100vh;
+    max-height: 600px;
+    min-height: 600px;
  
     border-radius: 10px;
 
@@ -21,16 +21,16 @@
 
 
 .headerChatBoard {
-    border-bottom: 1px solid #e8e8e8;
+
     padding: 5px;
     display: flex;
-    background-color: #ededed;
+    background-color: #d8d0d0;
     
 }
 
 .textHeaderChatBoard {
     font-weight: bold;
-    color: #203152;
+    color: #0d498d;
     margin-left: 10px;
     
 }
@@ -38,8 +38,7 @@
 .viewListContentChat {
     display: flex;
     flex: 1;
-    flex-direction: column;
-    overflow-y: scroll;
+
     padding-top: 10px;
     padding-bottom: 20px;
 }
@@ -53,7 +52,7 @@
     justify-content: center;
     height:100px;
    
-    background-color: #f0f0f0;
+    background-color: #d8d0d0;
 }
 
 .icOpenGallery {

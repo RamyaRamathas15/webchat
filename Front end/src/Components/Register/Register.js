@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import { Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
 
 const emailPattern = RegExp(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,})+$/);
 const passwordPattern = RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}/);
@@ -19,6 +20,10 @@ const Register = ({ history }) => {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [organization, setOrganization] = useState("");
   const [organizationError, setOrganizationError] = useState("");
+  const [question, setQuestion] = useState("Select the question");
+  const [questionError, setQuestionError] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [answerError, setAnswerError] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -58,6 +63,14 @@ const Register = ({ history }) => {
       value
         ? setOrganizationError("")
         : setOrganizationError("Value is Required");
+    } else if (name === "question") {
+      setQuestion(value);
+      value !== "Select the question"
+        ? setQuestionError("")
+        : setQuestionError("Please select the question");
+    } else if (name === "answer") {
+      setAnswer(value);
+      value ? setAnswerError("") : setAnswerError("Value is Required");
     }
   };
 
@@ -65,7 +78,17 @@ const Register = ({ history }) => {
     e.preventDefault();
     setLoading(true);
 
-    if (!(nameField && email && password && confirmPassword && organization)) {
+    if (
+      !(
+        nameField &&
+        email &&
+        password &&
+        confirmPassword &&
+        organization &&
+        question &&
+        answer
+      )
+    ) {
       setError("Please fill all mandatory fields");
       setLoading(false);
       return false;
@@ -75,7 +98,9 @@ const Register = ({ history }) => {
       emailError ||
       passwordError ||
       confirmPasswordError ||
-      organizationError
+      organizationError ||
+      questionError ||
+      answerError
     ) {
       setError("Please check the error");
       setLoading(false);
@@ -110,17 +135,32 @@ const Register = ({ history }) => {
         createResponse.data.uid !== undefined &&
         createResponsefire.data !== ""
       ) {
-        setLoading(false);
-        history.push({
-          pathname: "/secondfactor",
-          state: {
+        const questionResponse = await axios.post(
+          `https://dhrzvmfzw6.execute-api.us-east-1.amazonaws.com/dev/users`,
+          {
             uid: createResponse.data.uid,
-            name: nameField,
-            email,
-            password,
-            organization,
-          },
-        });
+            question,
+            answer,
+          }
+        );
+        if (questionResponse.data.body) {
+          setLoading(false);
+          setError("User registered Successfully");
+          history.push("/login");
+        } else {
+          await axios.delete(
+            `https://us-central1-clear-gantry-283402.cloudfunctions.net/app/deleteUser/${createResponse.data.uid}`
+          );
+
+          await axios.delete(
+            `https://us-central1-clear-gantry-283402.cloudfunctions.net/app/deleteUserDetails/${createResponse.data.uid}`
+          );
+
+          setError("Error Occured... User not registered");
+          setLoading(false);
+          history.push("/register");
+          return false;
+        }
       } else {
         await axios.delete(
           `https://us-central1-clear-gantry-283402.cloudfunctions.net/app/deleteUser/${createResponse.data.uid}`
@@ -130,7 +170,7 @@ const Register = ({ history }) => {
           `https://us-central1-clear-gantry-283402.cloudfunctions.net/app/deleteUserDetails/${createResponse.data.uid}`
         );
         setLoading(false);
-        setError("error");
+        setError("Error Occured... User not registered");
         return false;
       }
     } else {
@@ -144,11 +184,12 @@ const Register = ({ history }) => {
 
   return (
     <>
+      <Navbar />
       <Container>
         <br></br>
         <Row>
           <Col sm={6}>
-            <h1>REGISTER</h1>
+            <h4>REGISTER</h4>
             <Form>
               <Form.Group controlId="formBasicName">
                 <Form.Label>Name*</Form.Label>
@@ -229,6 +270,48 @@ const Register = ({ history }) => {
               <NavLink to="/login" className="link">
                 <p>Already have an account? Login here.</p>
               </NavLink>
+            </Form>
+          </Col>
+          <Col sm={6}>
+            <h4>Security Question and Answer</h4>
+            <Form>
+              <Form.Group controlId="formQuestion">
+                <Form.Label>Question*</Form.Label>
+                <Form.Control
+                  as="select"
+                  custom
+                  onChange={onChangeHandler}
+                  onBlur={onChangeHandler}
+                  value={question}
+                  name="question"
+                >
+                  <option value="Select the question" hidden>
+                    Select the question
+                  </option>
+                  <option value="What is your favourite destination?">
+                    What is your favourite destination?
+                  </option>
+                  <option value="What is the name of your first pet?">
+                    What is the name of your first pet?
+                  </option>
+                  <option value="what is the name of your oldest cousin?">
+                    what is the name of your oldest cousin?
+                  </option>
+                </Form.Control>
+                <div>{questionError}</div>
+              </Form.Group>
+              <Form.Group controlId="formAnswer">
+                <Form.Label>Answer*</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Answer"
+                  name="answer"
+                  value={answer}
+                  onChange={onChangeHandler}
+                  onBlur={onChangeHandler}
+                />
+                <div>{answerError}</div>
+              </Form.Group>
             </Form>
           </Col>
         </Row>
