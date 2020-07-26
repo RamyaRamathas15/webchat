@@ -23,7 +23,7 @@ const LoginSecondFactor = ({ history, location }) => {
   const setLocalStorageForChat = (response) => {
     localStorage.setItem(LoginString.Name, response.name);
     localStorage.setItem(LoginString.ID, response.id);
-    localStorage.setItem(LoginString.PhotoURL, images);
+    localStorage.setItem(LoginString.PhotoURL, response.URL);
     // localStorage.setItem(LoginString.FirebaseDocumentId, response.id)
   };
 

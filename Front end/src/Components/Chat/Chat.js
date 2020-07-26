@@ -222,12 +222,15 @@ export default class Chat extends Component {
         <div className="body">
           <div className="viewListUser">
             <div className="profileviewleftside">
+              
               <img
                 className="ProfilePicture"
                 alt=""
                 src={this.currentUserPhoto}
                 onClick={this.onProfileClick}
               />
+              <p className="text1">{this.currentUserName}</p>
+            
             </div>
             <div className="rootsearchbar">
               <div className="input-container">
