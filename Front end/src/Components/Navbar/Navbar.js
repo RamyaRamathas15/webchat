@@ -8,12 +8,20 @@ import { Form } from "react-bootstrap";
 import { AuthContext } from "../../Context/auth";
 import { auth } from "../../backend/firebase";
 import { withRouter } from "react-router";
+import { firestore } from "../../backend/firebase";
 
 const NavbarComponent = (props) => {
   const { currentUser } = useContext(AuthContext);
 
   const logout = () => {
     auth.signOut();
+    const uid = localStorage.getItem("uid");
+    firestore.collection("users").doc(uid).set(
+      {
+        online: false,
+      },
+      { merge: true }
+    );
     props.history.push("/");
     localStorage.clear();
   };

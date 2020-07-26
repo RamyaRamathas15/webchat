@@ -6,6 +6,7 @@ import axios from "axios";
 import { AuthContext } from "../../Context/auth";
 import LoginString from "../../backend/LoginStrings";
 import images from "../Login/golden1.jpeg";
+import { firestore } from "../../backend/firebase";
 
 const LoginSecondFactor = ({ history, location }) => {
   const [answer, setAnswer] = useState("");
@@ -62,6 +63,13 @@ const LoginSecondFactor = ({ history, location }) => {
           setLoading(false);
           setLocalStorageForChat(responseData);
           setCurrentUser(user);
+          localStorage.setItem("uid", uid);
+          firestore.collection("users").doc(uid).set(
+            {
+              online: true,
+            },
+            { merge: true }
+          );
           history.push("/chat");
         })
         .catch(function (error) {
