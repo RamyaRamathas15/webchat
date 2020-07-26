@@ -34,7 +34,7 @@ const Login = ({ history }) => {
     console.log("hi" + LoginString.Name);
     localStorage.setItem(LoginString.ID, response.id);
     console.log("hi" + LoginString.id);
-    localStorage.setItem(LoginString.PhotoURL, images);
+    localStorage.setItem(LoginString.PhotoURL, reponse.URL);
     localStorage.setItem(LoginString.FirebaseDocumentId, response.id);
     console.log("hi" + LoginString.FirebaseDocumentId);
   };
