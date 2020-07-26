@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { AuthContext } from "./../Context/auth";
+import LoginString from "../backend/LoginStrings";
 
 const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
-  const { currentUser } = useContext(AuthContext);
+  const currentUser = localStorage.getItem(LoginString.Name);
   return (
     <Route
       {...rest}

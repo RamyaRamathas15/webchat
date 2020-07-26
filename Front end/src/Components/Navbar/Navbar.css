@@ -1,27 +1,23 @@
-
-
-  .navbar_bg{
-
-    background-color: #737ac9;
-
-  }
-  
-  .navbar-brand {
-    padding: 15px 30px 30px 30px;
-    height: 80px;
-    line-height: 80px;
-    font-weight: bold;
-    font-size: 28px !important;
-  }
-
-  .navbar-light .navbar-nav .nav-link {
-    color: rgba(0, 0, 0, 0.979) !important;
+.navbar_bg {
+  background-color: #737ac9;
 }
 
+.navbar-brand {
+  padding: 15px 30px 30px 30px;
+  height: 80px;
+  line-height: 50px;
+  font-weight: bold;
+  font-size: 28px !important;
+}
 
-  
+.nav-item a {
+  color: rgba(0, 0, 0, 0.979) !important;
+}
 
+.dropdown-menu {
+  left: -60px !important;
+}
 
-
-
- 
+.navbar-light .navbar-nav .nav-link {
+  color: rgba(0, 0, 0, 0.979) !important;
+}
