@@ -7,11 +7,10 @@ import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import { AuthProvider } from "./Context/auth";
 import PrivateRoute from "./Routes/PrivateRoute";
-import SecondFactor from "./Components/Register/SecondFactor";
 import LoginSecondFactor from "./Components/Login/LoginSecondFactor";
-import Chat from './Components/Chat/Chat';
-import Profile from './Components/Profile/Profile';
-import Homepage from './Components/Homepage/Homepage';
+import Chat from "./Components/Chat/Chat";
+import Profile from "./Components/Profile/Profile";
+import Homepage from "./Components/Homepage/Homepage";
 
 function App() {
   return (
@@ -22,10 +21,9 @@ function App() {
           <PrivateRoute exact path="/home" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/secondfactor" component={SecondFactor} />
-          <Route exact path="/chat" component={Chat} />
-          <Route exact path="/profile" component={Profile}/>
-          <Route exact path="/homepage" component={Homepage}/>
+          <PrivateRoute exact path="/chat" component={Chat} />
+          <PrivateRoute exact path="/profile" component={Profile} />
+          <Route exact path="/homepage" component={Homepage} />
           <Route
             exact
             path="/loginsecondfactor"
