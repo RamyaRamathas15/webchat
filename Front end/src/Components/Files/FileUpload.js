@@ -1,8 +1,12 @@
 import React, {Component} from "react";
 import axios from "axios";
 import "./FileUpload.css";
+import LoginString from '../../backend/LoginStrings';
 
-const FILE_SERIVCE_URL = "https://us-central1-serverlessproject-284221.cloudfunctions.net/uploadFiles";
+const FILE_UPLOAD_URL = "https://us-central1-serverlessproject-284221.cloudfunctions.net/uploadFiles";
+const SENTENCE_ENCODE_URL = "https://sentenceencoder-ednqegx5tq-uc.a.run.app/encode"
+const FILE_INFO_URL = "https://us-central1-serverlessproject-284221.cloudfunctions.net/files";
+const WORDCLOUD_URL = "https://wordcloud-ednqegx5tq-uc.a.run.app/home";
 
 export default class FileUpload extends Component {
   constructor(props) {
@@ -14,7 +18,7 @@ export default class FileUpload extends Component {
   }
 
   componentDidMount() {
-    axios.get(FILE_SERIVCE_URL).then(res => {
+    axios.get(FILE_INFO_URL).then(res => {
       this.setState({
         uploadedFiles: res.data
       });
@@ -28,30 +32,61 @@ export default class FileUpload extends Component {
 
   onFileUpload = async () => {
     if (this.state.selectedFile != null) {
-      const formData = new FormData();
-      const KEY = "myFile";
+      try {
+        this.isLoading = true
+        const formData = new FormData();
+        const KEY = "myFile";
 
-      formData.append(
-        KEY,
-        this.state.selectedFile,
-        this.state.selectedFile.name
-      );
+        formData.append(
+          KEY,
+          this.state.selectedFile,
+          this.state.selectedFile.name
+        );
 
-      axios.post(FILE_SERIVCE_URL + "?organizationId=1223242424242", formData).then(res => {
-        let files = this.state.uploadedFiles;
+        const organization = localStorage.getItem(LoginString.Organization);
+        axios.post(FILE_UPLOAD_URL + `?organizationId=${organization}`, formData).then(async (res) => {
+          const hash = await this.encodeText(res.data.files.myFile.name);
+          let fileInfo = {
+            organization,
+            hash,
+            email: localStorage.getItem(LoginString.Email),
+            filename: res.data.files.myFile.name,
+            path: res.data.files.myFile.path
+          };
 
-        files.push({
-          filename: res.data.files.myFile.name,
-          createdTime: res.data.files.myFile.mtime
+          await axios.post(FILE_INFO_URL, fileInfo);
+          this.updateFilesList(res.data.files.myFile);
         });
-        this.setState({
-          uploadedFiles: files
-        });
-      });
+      } catch(error) {
+        alert(error);
+      } finally {
+        this.isLoading = false
+      }
     } else {
       alert("Please upload a file");
     }
   };
+
+  updateFilesList = (file) => {
+    let files = this.state.uploadedFiles;
+    files.push({
+      filename: file.name,
+      createdTime: file.mtime
+    });
+
+    this.setState({
+      uploadedFiles: files
+    });
+  };
+
+  encodeText = async (text) => {
+    try {
+      const hash = await axios.get(SENTENCE_ENCODE_URL + `?fileName=${text}`);
+      return hash
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   render() {
     return (

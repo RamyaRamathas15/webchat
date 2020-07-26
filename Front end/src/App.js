@@ -22,7 +22,6 @@ function App() {
           <PrivateRoute exact path="/home" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/secondfactor" component={SecondFactor} />
           <Route exact path="/chat" component={Chat} />
           <Route exact path="/profile" component={Profile}/>
           <Route exact path="/files" component={FileUpload}/>

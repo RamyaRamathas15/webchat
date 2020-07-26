@@ -37,6 +37,7 @@ const Login = ({ history }) => {
     localStorage.setItem(LoginString.PhotoURL , response.URL);
     localStorage.setItem(LoginString.FirebaseDocumentId , response.id);
     console.log("hi"+LoginString.FirebaseDocumentId)
+    localStorage.setItem(LoginString.Organization , response.organization);
   };
 
   const onSubmitHandler = async (e) => {
@@ -154,7 +155,7 @@ const Login = ({ history }) => {
           </Col>
         </Row>
       </Container>
-  
+
     </>
   );
 };

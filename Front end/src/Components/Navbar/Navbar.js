@@ -23,6 +23,9 @@ class NavbarComponent extends Component {
               <Nav.Link as={Link} to="/chat">
                 Chat
               </Nav.Link>
+              <Nav.Link as={Link} to="/files">
+                File
+              </Nav.Link>
               <Nav.Link as={Link} to="/">
                 Online support
               </Nav.Link>
