@@ -3,6 +3,7 @@ import axios from "axios";
 import "./FileUpload.css";
 import LoginString from '../../backend/LoginStrings';
 import WordCloud from './WordCloud/WordCloud';
+import ClusterFiles from './ClusterFiles/ClusterFiles';
 
 const FILE_UPLOAD_URL = "https://us-central1-serverlessproject-284221.cloudfunctions.net/uploadFiles";
 const SENTENCE_ENCODE_URL = "https://sentenceencoder-ednqegx5tq-uc.a.run.app/encode"
@@ -113,11 +114,11 @@ export default class FileUpload extends Component {
     return (
       <div className="container pt-4">
         <h3 className="text-center mt-4">Cloud Storage</h3>
-        <h4 className="text-center text-danger">By NuNu... 🚗🔥</h4>
         <nav className="mt-4">
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active" id="nav-file-tab" data-toggle="tab" href="#nav-file" role="tab" aria-controls="nav-file" aria-selected="true">Files List</a>
             <a class="nav-item nav-link" id="nav-word-cloud-tab" data-toggle="tab" href="#nav-word-cloud" role="tab" aria-controls="nav-word-cloud" aria-selected="false">Word Cloud</a>
+            <a class="nav-item nav-link" id="nav-cluster-files-tab" data-toggle="tab" href="#nav-cluster-files" role="tab" aria-controls="nav-cluster-files" aria-selected="false">Cluster Files</a>
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -173,6 +174,9 @@ export default class FileUpload extends Component {
           </div>
           <div class="tab-pane fade" id="nav-word-cloud" role="tabpanel" aria-labelledby="nav-word-cloud-tab">
             <WordCloud></WordCloud>
+          </div>
+          <div class="tab-pane fade" id="nav-cluster-files" role="tabpanel" aria-labelledby="nav-cluster-files-tab">
+            <ClusterFiles></ClusterFiles>
           </div>
         </div>
       </div>

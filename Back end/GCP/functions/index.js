@@ -171,7 +171,7 @@ app.get("/clusterfiles", async (req, res) => {
   try {
     const files = await db
       .collection("files")
-      .doc(req.body.organization)
+      .doc(req.query.organization || req.body.organization)
       .collection("meta")
       .get();
 
