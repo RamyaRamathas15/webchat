@@ -4,6 +4,7 @@ import "./FileUpload.css";
 import LoginString from '../../backend/LoginStrings';
 import WordCloud from './WordCloud/WordCloud';
 import ClusterFiles from './ClusterFiles/ClusterFiles';
+import Navbar from "../Navbar/Navbar";
 
 const FILE_UPLOAD_URL = "https://us-central1-serverlessproject-284221.cloudfunctions.net/uploadFiles";
 const SENTENCE_ENCODE_URL = "https://sentenceencoder-ednqegx5tq-uc.a.run.app/encode"
@@ -112,6 +113,8 @@ export default class FileUpload extends Component {
 
   render() {
     return (
+      <>
+      <Navbar/>
       <div className="container pt-4">
         <h3 className="text-center mt-4">Cloud Storage</h3>
         <nav className="mt-4">
@@ -179,7 +182,8 @@ export default class FileUpload extends Component {
             <ClusterFiles></ClusterFiles>
           </div>
         </div>
-      </div>
+        </div>
+      </>
     );
   }
 }
