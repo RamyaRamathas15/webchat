@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Amplify, { Interactions } from "aws-amplify";
 import { ChatBot, AmplifyTheme } from "aws-amplify-react";
+import Navbar from "../Navbar/Navbar.js";
 
 Amplify.configure({
     Auth: {
@@ -30,17 +31,19 @@ const myTheme = {
 class OnlineSupport extends Component {
     render() {
         return (
-            <div className="App" style={{ fontSize: "30px", margin: "5rem" }}>
-                <ChatBot
-                    style={{}}
-                    title="Online Support"
-                    theme={myTheme}
-                    botName="lmsHelperBot"
-                    welcomeMessage="Hey there, need any help?"
-                    clearOnComplete={true}
-                    conversationModeOn={false}
+            <div className="App" style={{ backgroundColor: "whitesmoke" }} >
+                <Navbar />
+                <div className="m-5" style={{ marginBottom: "2rem" }}>
+                    <ChatBot
+                        title="Online Support"
+                        theme={myTheme}
+                        botName="lmsHelperBot"
+                        welcomeMessage="Hey there, need any help?"
+                        clearOnComplete={true}
+                        conversationModeOn={false}
 
-                />
+                    />
+                </div>
             </div>
         );
     }
