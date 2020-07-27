@@ -37,11 +37,11 @@ const NavbarComponent = (props) => {
               <>
                 <Nav.Link href="/files">File</Nav.Link>
                 <Nav.Link href="/chat">Chat</Nav.Link>
-                <Nav.Link href="/">Online support</Nav.Link>
+                <Nav.Link href="/onlinesupport">Online support</Nav.Link>
               </>
             ) : (
-              <></>
-            )}
+                <></>
+              )}
           </Nav>
 
           <Form>
@@ -51,17 +51,17 @@ const NavbarComponent = (props) => {
                   <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                 </>
               ) : (
-                <>
-                  <NavDropdown.Item as={Link} to="/login">
-                    Login
+                  <>
+                    <NavDropdown.Item as={Link} to="/login">
+                      Login
                   </NavDropdown.Item>
 
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item as={Link} to="/register">
-                    Register
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item as={Link} to="/register">
+                      Register
                   </NavDropdown.Item>
-                </>
-              )}
+                  </>
+                )}
             </NavDropdown>
           </Form>
         </Navbar.Collapse>

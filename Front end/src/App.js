@@ -16,6 +16,7 @@ import Chat from "./Components/Chat/Chat";
 import Profile from "./Components/Profile/Profile";
 import FileUpload from "./Components/Files/FileUpload";
 import Homepage from "./Components/Homepage/Homepage";
+import OnlineSupport from "./Components/OnlineSupport/OnlineSupport"
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <PrivateRoute exact path="/chat" component={Chat} />
           <PrivateRoute exact path="/profile" component={Profile} />
           <PrivateRoute exact path="/files" component={FileUpload} />
+          <PrivateRoute exact path="/onlinesupport" component={OnlineSupport} />
           {/* <Route path="/chat" render={props => <Chat showToast={this.showToast}{...props}/>}/>  */}
           <Route
             exact
