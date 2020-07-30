@@ -69,4 +69,5 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 
 ### References:
-1. 2020. [Online]. Available: https://youtu.be/nvYuMI-RbAY. [Accessed: 15- Jul- 2020].
+[1] 2020. [Online]. Available: https://youtu.be/nvYuMI-RbAY. [Accessed: 15- Jul- 2020].
+[2] 2020. [Online]. Available: https://www.youtube.com/watch?v=vcuDt-G2nTg. [Accessed: 16- Jul- 2020].
