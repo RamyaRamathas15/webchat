@@ -1,0 +1,503 @@
+{
+  "metadata": {
+    "schemaVersion": "1.0",
+    "importType": "LEX",
+    "importFormat": "JSON"
+  },
+  "resource": {
+    "name": "lmsHelperBot",
+    "version": "1",
+    "intents": [
+      {
+        "name": "HelpNavigation",
+        "version": "8",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "I need some help",
+          "Hi need help",
+          "I want to know how to {action} ",
+          "{panda}",
+          "I want to {panda}",
+          "i want help in {action}",
+          "i want to {action} {data}",
+          "{data}",
+          "hello"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "actionType",
+            "slotTypeVersion": "1",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "How can I help you ?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "action"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "object",
+            "slotTypeVersion": "1",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "what do you want to upload (file / data)?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 5,
+            "name": "data"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "panda",
+            "slotTypeVersion": "1",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Do you want to process or analyze?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 6,
+            "name": "panda"
+          }
+        ],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "You will find the option to {action} and {panda} your {data} on top left corner named Files along with Home button!!"
+            }
+          ]
+        }
+      },
+      {
+        "name": "HelpRDS",
+        "version": "7",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:529572177791:function:LMSBotrds",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "I forgot {forg}",
+          "Hello i need help ",
+          "{user}",
+          "my email is {user}",
+          "I forgot my security {forg}",
+          "I forgot security {forg}"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "forgot",
+            "slotTypeVersion": "1",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "what can i help you with?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "forg"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.EmailAddress",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "please enter you email id associated with this account."
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 2,
+            "name": "user"
+          }
+        ]
+      },
+      {
+        "name": "HelpChat",
+        "version": "18",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:529572177791:function:LMSBot",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "help",
+          "i need help",
+          "I want to know who {people} is {status} ",
+          "Is {people} {status} ",
+          "Status {people}",
+          "{organisation}",
+          "My Organisation name is {organisation}",
+          "I want to know who {people} is {status} in my Organisation ",
+          "my user name is {User}",
+          "{User}",
+          "{User} {organisation}",
+          "How {people} users are {status}"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "organisationname",
+            "slotTypeVersion": "1",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Please enter your organisation name for security reasons"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 4,
+            "name": "organisation"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "personorcrowd",
+            "slotTypeVersion": "1",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "what help ?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "people"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "statustype",
+            "slotTypeVersion": "1",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Are you looking for Online or Offline Users ?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 2,
+            "name": "status"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.EmailAddress",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Please enter your Email Id and Organisation name. for security reasons."
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 3,
+            "name": "User"
+          }
+        ]
+      },
+      {
+        "name": "HelpFind",
+        "version": "10",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "where can i {nav} people to {page}",
+          "how to {page}",
+          "where can i {nav} option to {page}",
+          "how to {nav} to {page}",
+          "where can i find {page}",
+          "where can i {nav} option to upload {page}",
+          "I need help in {nav}",
+          "{page}",
+          "hi"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "navaction",
+            "slotTypeVersion": "1",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "how can i help ?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "nav"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "page",
+            "slotTypeVersion": "1",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "you need help in navigating / finding what?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 2,
+            "name": "page"
+          }
+        ],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "You can find option to {page} on Navigation bar where on top right is profile options and top left are the options to upload files, chat with users and Me your online virtual assistant!!"
+            }
+          ]
+        }
+      }
+    ],
+    "slotTypes": [
+      {
+        "description": "Upload , find , etc.",
+        "name": "actionType",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "navigate"
+          },
+          {
+            "value": "upload"
+          },
+          {
+            "value": "find"
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      },
+      {
+        "name": "navaction",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "navigate"
+          },
+          {
+            "value": "find"
+          },
+          {
+            "value": "go"
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      },
+      {
+        "description": "process or analyse ",
+        "name": "panda",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "process"
+          },
+          {
+            "value": "analyse"
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      },
+      {
+        "name": "organisationname",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "Lms"
+          },
+          {
+            "value": "Dalhousie"
+          },
+          {
+            "value": "DAL"
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      },
+      {
+        "description": "crowd",
+        "name": "personorcrowd",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "all"
+          },
+          {
+            "value": "else"
+          },
+          {
+            "value": "people"
+          },
+          {
+            "value": "user"
+          },
+          {
+            "value": "users"
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      },
+      {
+        "name": "statustype",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "offline"
+          },
+          {
+            "value": "idle"
+          },
+          {
+            "value": "online"
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      },
+      {
+        "name": "page",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "logout"
+          },
+          {
+            "value": "chat"
+          },
+          {
+            "value": "profile"
+          },
+          {
+            "value": "files"
+          },
+          {
+            "value": "homepage"
+          },
+          {
+            "value": "home"
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      },
+      {
+        "name": "forgot",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "remember"
+          },
+          {
+            "value": "didn't"
+          },
+          {
+            "value": "forgot"
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      },
+      {
+        "description": "files,data etc.",
+        "name": "object",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "image"
+          },
+          {
+            "value": "file"
+          },
+          {
+            "value": "data"
+          },
+          {
+            "value": "files"
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      }
+    ],
+    "voiceId": "Salli",
+    "childDirected": false,
+    "locale": "en-US",
+    "idleSessionTTLInSeconds": 1800,
+    "clarificationPrompt": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, can you please repeat that?"
+        }
+      ],
+      "maxAttempts": 5
+    },
+    "abortStatement": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, I could not understand. Goodbye."
+        }
+      ]
+    },
+    "detectSentiment": false,
+    "enableModelImprovements": false
+  }
+}
