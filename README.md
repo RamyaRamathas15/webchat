@@ -70,11 +70,17 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 ### References:
 [1] 2020. [Online]. Available: https://youtu.be/nvYuMI-RbAY. [Accessed: 15- Jul- 2020].
+
 [2] 2020. [Online]. Available: https://www.youtube.com/watch?v=vcuDt-G2nTg. [Accessed: 16- Jul- 2020].
+
 [3] React-bootstrap.github.io, 2020. [Online]. Available: https://react-bootstrap.github.io/. [Accessed: 16- Jul- 2020].
+
 [4] “‘Greetings, visitor!’ — Engage Your Web Users with Amazon Lex | Amazon Web Services,” Amazon Web Services, 23-Jun-2017. [Online]. Available: https://aws.amazon.com/blogs/machine-learning/greetings-visitor-engage-your-web-users-with-amazon-lex/. [Accessed: 30-Jul-2020].
+
 [5] “Deploy a Web UI for Your Chatbot  | Amazon Web Services,” Amazon Web Services, 26-Jan-2018. [Online]. Available: https://aws.amazon.com/blogs/machine-learning/deploy-a-web-ui-for-your-chatbot/. [Accessed: 30-Jul-2020].
+
 [6] “Amplify Framework Documentation,” Amplify Framework Documentation, 2020. [Online]. Available: https://docs.amplify.aws/ui-legacy/interactions/chatbot/q/framework/react. [Accessed: 30-Jul-2020].
+
 [7] W. Ashford, “How to Make More Useful Chatbots - William Ashford - Medium,” Medium, 22-Feb-2018. [Online]. Available: https://medium.com/@willjashford/chatbots-to-intelligent-assistants-e179b35be2fd. [Accessed: 30-Jul-2020].
 ‌
 ‌
