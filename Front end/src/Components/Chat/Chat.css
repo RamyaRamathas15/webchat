@@ -1,6 +1,6 @@
 
 
-.body {
+.main-body {
     display: flex;
     flex-direction: row;
   
@@ -18,10 +18,6 @@
     margin-top: -50px;
 }
 
-
-
-
-
 .btnNo {
     width: 100px;
     height: 40px;
@@ -35,33 +31,17 @@
     cursor: pointer;
 }
 
-/* List user */
-
-.viewListUser {
+.listofusers {
     max-height: 100vh;
     min-height: 90vh;
     height: auto;
-    /* padding-top: 10px; */
-    /* padding-bottom: 10px; */
+
    
 }
 
-.viewListUser::-webkit-scrollbar-track {
-    padding: 2px 0;
-    background-color: #ffffff;
-}
 
-.viewListUser::-webkit-scrollbar {
-    width: 6px;
-}
 
-.viewListUser::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #9999;
-}
-
-.viewWrapItem {
+.listitem {
     border: none;
     display: flex;
     background-color: #fff;
@@ -69,8 +49,6 @@
     padding: 10px;
     align-items: center;
     justify-content: center;
-    /* border-left: 15px solid #1ebea5; */
-    /* margin-bottom: 3px; */
     border-bottom: 1px solid rgb(220,220,220);
   
 }
@@ -80,16 +58,15 @@
 
 
 
-.viewAvatarItem {
+.profilepic {
     width: 50px;
     height: 50px;
     border-radius: 25px;
     object-fit: cover;
-    /* background-image: url(../../images/nopic.jpg) */
 
 }
 
-.viewWrapContentItem {
+.word-gap {
     flex-direction: column;
     display: flex;
     flex: 1;
@@ -108,9 +85,7 @@
     font-size: 14px;
 }
 
-
-/* --------------------------------SEARCH BUTTON DESIGN-------------------------------- */
-    .rootsearchbar{
+.searchbar{
     padding:10px;
     width: 100%; 
         margin-bottom: 10px; 
@@ -134,8 +109,6 @@
     width: 100%;
    
     border-radius: 10px;
-    
-    /* margin-right: 85%; */
     border: none ! important;
     box-shadow: none ! important;
     outline: none ! important;

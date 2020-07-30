@@ -14,7 +14,7 @@ export default class Chat extends Component {
       isLoading: true,
       isOpenDialogConfirmLogout: false,
       currentPeerUser: null,
-      displayedContactSwitchedNotification: [],
+      notification: [],
       displayedContacts: [],
     };
     this.currentUserName = localStorage.getItem(LoginString.Name);
@@ -30,7 +30,6 @@ export default class Chat extends Component {
     this.getClassnameforUserandNotification = this.getClassnameforUserandNotification.bind(
       this
     );
-    this.notificationErase = this.notificationErase.bind(this);
     this.updaterenderList = this.updaterenderList.bind(this);
   }
   onProfileClick = () => {
@@ -49,7 +48,7 @@ export default class Chat extends Component {
           });
         });
         this.setState({
-          displayedContactSwitchedNotification: this.currentUserMessages,
+          notification: this.currentUserMessages,
         });
       });
     this.getListUser();
@@ -83,9 +82,9 @@ export default class Chat extends Component {
       this.state.currentPeerUser &&
       this.state.currentPeerUser.id === itemId
     ) {
-      className = "viewWrapItemFocused";
+      className = "wrapitem";
     } else {
-      this.state.displayedContactSwitchedNotification.forEach((item) => {
+      this.state.notification.forEach((item) => {
         if (item.notificationId?.length > 0) {
           if (item.notificationId === itemId) {
             check = true;
@@ -96,32 +95,18 @@ export default class Chat extends Component {
       if (check === true) {
         className = "viewWrapItemNotification";
       } else {
-        className = "viewWrapItem";
+        className = "listitem";
       }
     }
     return className;
   };
-  notificationErase = (itemId) => {
-    this.state.displayedContactSwitchedNotification.forEach((l) => {
-      if (l.notificationId?.length > 0) {
-        if (l.notificationId != itemId) {
-          this.notificationMessagesErase.push({
-            notificationId: l.notificationId,
-            number: l.number,
-          });
-        }
-      }
-    });
-    this.updaterenderList();
-  };
-
   updaterenderList = () => {
     firestore
       .collection("users")
       .doc(this.currentUserId)
       .update({ messages: this.notificationMessagesErase });
     this.setState({
-      displayedContactSwitchedNotification: this.notificationMessagesErase,
+      notification: this.notificationMessagesErase,
     });
   };
   renderListUser = () => {
@@ -136,15 +121,12 @@ export default class Chat extends Component {
               id={item.key}
               className={classname}
               onClick={() => {
-                this.notificationErase(item.id);
                 this.setState({ currentPeerUser: item });
-                document.getElementById(item.key).style.backgroundColor =
-                  "#fff";
-                document.getElementById(item.key).style.color = "#fff";
+            
               }}
             >
-              <img className="viewAvatarItem" src={item.URL} alt="" />
-              <div className="viewWrapContentItem">
+              <img className="profilepic" src={item.URL} alt="" />
+              <div className="word-gap">
                 <span className="textItem">{`${item.name}`}</span>
               </div>
               {classname === "viewWrapItemNotification" ? (
@@ -186,14 +168,10 @@ export default class Chat extends Component {
               id={item.key}
               className={classname}
               onClick={() => {
-                this.notificationErase(item.id);
                 this.setState({ currentPeerUser: item });
-                document.getElementById(item.key).style.backgroundColor =
-                  "#fff";
-                document.getElementById(item.key).style.color = "#fff";
               }}
             >
-              <img className="viewAvatarItem" src={item.URL} alt="" />
+              <img className="profilepic" src={item.URL} alt="" />
               <div className="viewWrapContentItem">
                 <span className="textItem">{`${item.name}`}</span>
               </div>
@@ -217,10 +195,10 @@ export default class Chat extends Component {
   };
   render() {
     return (
-      <div className="root">
+      <div className="main">
         <Navbar />
-        <div className="body">
-          <div className="viewListUser">
+        <div className="main-body">
+          <div className="listofusers">
             <div className="profileviewleftside">
               
               <img
@@ -232,15 +210,13 @@ export default class Chat extends Component {
               <p className="text1">{this.currentUserName}</p>
             
             </div>
-            <div className="rootsearchbar">
-              <div className="input-container">
+            <div className="searchbar">
                 <input
                   class="input-field"
                   type="text"
                   onChange={this.searchHandler}
                   placeholder="search"
                 />
-              </div>
             </div>
             {this.state.displayedContacts}
           </div>

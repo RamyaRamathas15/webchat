@@ -1,4 +1,4 @@
-/* Chat board */
+
 
 .chatbox {
   display: flex;
@@ -16,7 +16,7 @@
   border-radius: 10px;
 }
 
-.headerChatBoard {
+.chatBoard {
   padding: 5px;
   display: flex;
   background-color: #d8d0d0;
@@ -45,7 +45,8 @@
   background-color: #d8d0d0;
 }
 
-.icOpenGallery {
+.gallery
+{
   width: 30px;
   height: 30px;
   margin-left: 10px;
@@ -84,9 +85,8 @@ input::placeholder {
   color: rgb(199, 199, 199);
 }
 
-/* View item message */
 
-.viewItemRight {
+.Right {
   width: 300px;
   height: auto;
   background-color: #87bcc9;
@@ -105,36 +105,7 @@ input::placeholder {
   box-shadow: 0 5px 5px #808888;
 }
 
-.viewItemRight2 {
-  width: 300px;
-  height: auto;
-  background-color: #e1f3fb;
-  align-self: flex-start;
-  margin-right: 20px;
-  margin-top: 10px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 0px;
-  color: #203152;
-  text-align: left;
-  box-shadow: 0 5px 5px #808888;
-}
-
-.viewItemRight3 {
-  width: 300px;
-  height: auto;
-  align-self: flex-end;
-  margin-right: 20px;
-  margin-top: 10px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 0px;
-  text-align: left;
-}
-
-.viewWrapItemLeft {
+.Left {
   width: 300px;
   height: auto;
   background-color: #87bcc9;
@@ -152,18 +123,3 @@ input::placeholder {
   box-shadow: 0 5px 5px #808888;
 }
 
-.viewWrapItemLeft2 {
-  width: 300px;
-  align-self: flex-start;
-  text-align: left;
-  margin-left: 20px;
-  margin-top: 10px;
-  margin-bottom: -15px;
-}
-
-.viewWrapItemLeft3 {
-  flex-direction: row;
-  display: flex;
-  width: 340px;
-  margin-bottom: -15px;
-}

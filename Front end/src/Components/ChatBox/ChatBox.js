@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./ChatBox.css";
 import { Card } from "react-bootstrap";
-// import ReactLoading from 'react-loading';
 import { firestore, auth, myStorage } from "../../backend/firebase";
 import LoginString from "../../backend/LoginStrings";
 import Navbar from "../Navbar/Navbar.js";
@@ -84,9 +83,6 @@ export default class ChatBox extends Component {
         }
       );
   };
-  openListSticker = () => {
-    this.setState({ isShowSticker: !this.state.isShowSticker });
-  };
   onSendMessage = (content, type) => {
     if (this.state.isShowSticker && type === 2) {
       this.setState({ isShowSticker: false });
@@ -123,57 +119,15 @@ export default class ChatBox extends Component {
       this.onSendMessage(this.state.inputValue, 0);
     }
   };
-  onChoosePhoto = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      this.setState({ isLoading: true });
-      this.currentPhotoFile = event.target.files[0];
-      const prefixFiletype = event.target.files[0].type.toString();
-      if (prefixFiletype.indexOf(LoginString.PREFIX_IMAGE) === 0) {
-        this.uploadPhoto();
-      } else {
-        this.setState({ isLoading: false });
-        this.props.showToast(0, "This file is not an image");
-      }
-    } else {
-      this.setState({ isLoading: false });
-    }
-  };
-  uploadPhoto = () => {
-    if (this.currentPhotoFile) {
-      const timestamp = moment().valueOf().toString();
-
-      const uploadTask = myStorage
-        .ref()
-        .child(timestamp)
-        .put(this.currentPhotoFile);
-
-      uploadTask.on(
-        LoginString.UPLOAD_CHANGED,
-        null,
-        (err) => {
-          this.setState({ isLoading: false });
-          this.props.showToast(0, err.message);
-        },
-        () => {
-          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            this.setState({ isLoading: false });
-            this.onSendMessage(downloadURL, 1);
-          });
-        }
-      );
-    } else {
-      this.setState({ isLoading: false });
-      this.props.showToast(0, "File is null");
-    }
-  };
+  
 
   render() {
     return (
       <div>
         <Card className="chatbox">
-          <div className="headerChatBoard">
+          <div className="chatBoard">
             <img
-              className="viewAvatarItem"
+              className="profilepic"
               src={this.currentPeerUser.URL}
               alt=""
             />
@@ -192,9 +146,8 @@ export default class ChatBox extends Component {
           </div>
           <div className="viewBottom">
             <img
-              className="icOpenGallery"
+              className="gallery"
               src={gallery}
-              alt="icon open gallery"
               onClick={() => this.refInput.click()}
             />
             <input
@@ -223,16 +176,6 @@ export default class ChatBox extends Component {
               }}
             />
           </div>
-          {/* {this.state.isLoading ? (
-                        <div className="viewLoading">
-                            <ReactLoading
-                            type={'spin'}
-                            color={'#203152'}
-                            height={'3%'}
-                            width={'3%'}
-                            />
-                        </div>
-                    ):null} */}
         </Card>
       </div>
     );
@@ -253,20 +196,20 @@ export default class ChatBox extends Component {
         if (item.idFrom === this.currentUserId) {
           if (item.type === 0) {
             viewListMessage.push(
-              <div className="viewItemRight" key={item.timestamp}>
+              <div className="Right" key={item.timestamp}>
                 <span className="textContentItem">{item.content}</span>
               </div>
             );
           } else if (item.type == 1) {
             viewListMessage.push(
-              <div className="viewWrapItemLeft" key={item.timestamp}>
+              <div className="Left" key={item.timestamp}>
                 <img className="imhg" src={item.content} />
               </div>
             );
           }
         } else if (item.type === 0) {
           viewListMessage.push(
-            <div className="viewWrapItemLeft" key={item.timestamp}>
+            <div className="Left" key={item.timestamp}>
               <span className="textContentItem">{item.content}</span>
             </div>
           );
