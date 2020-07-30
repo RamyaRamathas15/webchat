@@ -17,9 +17,9 @@ export default class Chat extends Component {
       notification: [],
       displayedContacts: [],
     };
-    this.currentUserName = localStorage.getItem(LoginString.Name);
-    this.currentUserId = localStorage.getItem(LoginString.ID);
-    this.currentUserPhoto = localStorage.getItem(LoginString.PhotoURL);
+    this.userName = localStorage.getItem(LoginString.Name);
+    this.userID = localStorage.getItem(LoginString.ID);
+    this.userPhoto = localStorage.getItem(LoginString.PhotoURL);
 
     this.currentUserMessages = [];
     this.searchUsers = [];
@@ -38,7 +38,7 @@ export default class Chat extends Component {
   componentDidMount() {
     firestore
       .collection("users")
-      .doc(this.currentUserId)
+      .doc(this.userID)
       .get()
       .then((doc) => {
         doc.data().messages.map((item) => {
@@ -103,7 +103,7 @@ export default class Chat extends Component {
   updaterenderList = () => {
     firestore
       .collection("users")
-      .doc(this.currentUserId)
+      .doc(this.userID)
       .update({ messages: this.notificationMessagesErase });
     this.setState({
       notification: this.notificationMessagesErase,
@@ -114,7 +114,7 @@ export default class Chat extends Component {
       let viewListUser = [];
       let classname = "";
       this.searchUsers.map((item) => {
-        if (item.id != this.currentUserId) {
+        if (item.id != this.userID) {
           classname = this.getClassnameforUserandNotification(item.id);
           viewListUser.push(
             <button
@@ -161,7 +161,7 @@ export default class Chat extends Component {
       let viewListUser = [];
       let classname = "";
       this.displayedContacts.map((item) => {
-        if (item.id != this.currentUserId) {
+        if (item.id != this.userID) {
           classname = this.getClassnameforUserandNotification(item.id);
           viewListUser.push(
             <button
@@ -204,10 +204,10 @@ export default class Chat extends Component {
               <img
                 className="ProfilePicture"
                 alt=""
-                src={this.currentUserPhoto}
+                src={this.userPhoto}
                 onClick={this.onProfileClick}
               />
-              <p className="text1">{this.currentUserName}</p>
+              <p className="text1">{this.userName}</p>
             
             </div>
             <div className="searchbar">
@@ -228,8 +228,8 @@ export default class Chat extends Component {
               />
             ) : (
               <Welcome
-                currentUserName={this.currentUserName}
-                currentUserPhoto={this.currentUserPhoto}
+              userName={this.userName}
+              userPhoto={this.userPhoto}
               />
             )}
           </div>
