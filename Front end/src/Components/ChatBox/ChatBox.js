@@ -16,15 +16,15 @@ export default class ChatBox extends Component {
       isShowSticker: false,
       inputValue: "",
     };
-    this.currentUserName = localStorage.getItem(LoginString.Name);
-    this.currentUserId = localStorage.getItem(LoginString.ID);
-    this.currentUserPhoto = localStorage.getItem(LoginString.PhotoURL);
+    this.userName = localStorage.getItem(LoginString.Name);
+    this.userID = localStorage.getItem(LoginString.ID);
+    this.userPhoto = localStorage.getItem(LoginString.PhotoURL);
     this.currentPeerUser = this.props.currentPeerUser;
     this.groupChatId = null;
     this.listMessage = [];
     this.currentPeerUserMessages = [];
     this.removeListener = null;
-    this.currentPhotoFile = null;
+
 
     firestore
       .collection("users")
@@ -58,12 +58,12 @@ export default class ChatBox extends Component {
     this.listMessage.length = 0;
     this.setState({ isLoading: true });
     if (
-      this.hashString(this.currentUserId) <=
-      this.hashString(this.currentPeerUser.id)
+      this.hashing(this.userID) <=
+      this.hashing(this.currentPeerUser.id)
     ) {
-      this.groupChatId = `${this.currentUserId}-${this.currentPeerUser.id}`;
+      this.groupChatId = `${this.userID}-${this.currentPeerUser.id}`;
     } else {
-      this.groupChatId = `${this.currentPeerUser.id}-${this.currentUserId}`;
+      this.groupChatId = `${this.currentPeerUser.id}-${this.userID}`;
     }
     this.removeListener = firestore
       .collection("Messages")
@@ -93,7 +93,7 @@ export default class ChatBox extends Component {
     const timestamp = moment().valueOf().toString();
 
     const itemMessage = {
-      idFrom: this.currentUserId,
+      idFrom: this.userID,
       idTo: this.currentPeerUser.id,
       timestamp: timestamp,
       content: content.trim(),
@@ -181,19 +181,19 @@ export default class ChatBox extends Component {
     );
   }
 
-  hashString = (str) => {
-    let hash = 0;
+  hashing = (str) => {
+    let j = 0;
     for (let i = 0; i < str.length; i++) {
-      hash += Math.pow(str.charCodeAt(i) * 31, str.length - i);
-      hash = hash & hash;
+      j += Math.pow(str.charCodeAt(i) * 31, str.length - i);
+      j = j & j;
     }
-    return hash;
+    return j;
   };
   renderListMessage = () => {
     if (this.listMessage.length > 0) {
       let viewListMessage = [];
       this.listMessage.forEach((item, index) => {
-        if (item.idFrom === this.currentUserId) {
+        if (item.idFrom === this.userID) {
           if (item.type === 0) {
             viewListMessage.push(
               <div className="Right" key={item.timestamp}>
