@@ -4,8 +4,8 @@
     "dependencies": {
         "@google-cloud/functions-framework": "^1.6.0",
         "@google-cloud/storage": "^5.1.2",
-        "firebase-admin": "~7.1.1",
-        "firebase-functions": "^2.2.1",
+        "firebase-admin": "~11.4.1",
+        "firebase-functions": "^4.1.1",
         "formidable-serverless": "^1.0.3"
     },
     "scripts": {
